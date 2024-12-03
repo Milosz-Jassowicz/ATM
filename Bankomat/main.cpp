@@ -1872,7 +1872,7 @@ bool OpenAccount(string number) {
     number+=".txt";
     if (checkForCard(number)) {
         string accountNumber = getAccountNumber(CardsPath + "\\" + number);
-        cout<<accountNumber<<endl;
+        //cout<<accountNumber<<endl;
         if (Account.is_open()) {
             Account.close();
         }
@@ -1905,9 +1905,9 @@ bool ChangeMoneyOnAccount(int money) {
     if (accountMoney + money < 0) {
         return false;
     } else {
-        cout<<endl<<accountMoney<<"+"<<money<<"=";
+        //cout<<endl<<accountMoney<<"+"<<money<<"=";
         accountMoney += money;
-        cout<<accountMoney;
+        //cout<<accountMoney;
         //Sleep(1000);
         //Account.seekp(0, ios::beg);
         accountReopen();
@@ -1919,7 +1919,7 @@ bool ChangeMoneyOnAccount(int money) {
 }
 
 void SetMoneyOnAccount(string amount) {
-    cout<<amount;
+    //cout<<amount;
     if(!amount.empty()){
         double money = stod(amount);
         if(money >= 0){
@@ -2927,7 +2927,7 @@ void setupCardFinishGUI(){
     TextBox *placeholderTextBox = new TextBox(9, 13, 3, true, nullptr, nullptr, nullptr, nullptr, false, true, false);
 
     finishButton->setText(exitText);
-    finishButton->setButtonAction(ChangeGUIToAdmin);
+    finishButton->setButtonAction(ChangeGUIToAccountMenu);
     finishButton->setOutput();
 
     CardFinish->adBox(finishButton);
@@ -3265,11 +3265,13 @@ void SETUP(){
     cout<<" - done"<<endl<<"setupDeleteCardGUI";
     setupDeleteCardGUI();
     cout<<" - done"<<endl<<"setupCreateAccountGUI";
+    setupCardFinishGUI();
+    cout<<" - done"<<endl<<"setupCardFinishGUI";
     setupCreateAccountGUI();
     cout<<" - done";
 
     cout<<"Setting starting values";
-    currentGUI = Admin;
+    currentGUI = Start;
     currentBox = currentGUI->getBox(0);
     currentBox->setSelect(true);
     cout<<" - done"<<endl;
@@ -3337,7 +3339,7 @@ void FINISH(){
     // Closing files
     if(Account.is_open())
         Account.close();
-        cout << "closed Account" << endl;
+    cout << "closed Account" << endl;
 
     if(Casket.is_open())
         Casket.close();
@@ -3360,7 +3362,7 @@ int main(){
         cout<<"\033[H";
         currentGUI->UpdateGUI();
         cout << "\033[H\033[21B";
-        cout << "[" << backgroundInput << "]    " << endl;
+        //cout << "[" << backgroundInput << "]    " << endl;
 
         while(!_kbhit()){}
         ic = _getch();
