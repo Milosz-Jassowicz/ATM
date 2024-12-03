@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1725741203 source:c:\users\login\desktop\bankomat\main.cpp
+	<filesystem>
+	<iostream>
+	<windows.h>
+	<cstdlib>
+	<math.h>
+	<conio.h>
+	<string>
+	<time.h>
+	<map>
+	<fstream>
+	<vector>
+
+1717593416 source:c:\users\login\desktop\bankomat\box.cpp
+	<iostream>
+	<math.h>
+
+1717593472 source:c:\users\login\desktop\bankomat\gui.cpp
+	<iostream>
+	"Box.cpp"
+
+1717593706 c:\users\login\desktop\bankomat\box.cpp
+	<iostream>
+	<math.h>
+
+1717596413 source:c:\users\login\desktop\bankomat2\box.cpp
+	<iostream>
+	<math.h>
+	"values.cpp"
+
+1717596410 c:\users\login\desktop\bankomat2\values.cpp
+
+1717596415 source:c:\users\login\desktop\bankomat2\gui.cpp
+	<iostream>
+	"Box.cpp"
+
+1717596413 c:\users\login\desktop\bankomat2\box.cpp
+	<iostream>
+	<math.h>
+	"values.cpp"
+
+1717596410 source:c:\users\login\desktop\bankomat2\values.cpp
+
+1717628164 source:c:\users\login\desktop\bankomat2\main.cpp
+	<iostream>
+	<windows.h>
+	<cstdlib>
+	<math.h>
+	<conio.h>
+	<string>
+

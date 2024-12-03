@@ -1,0 +1,1900 @@
+#include <iostream>
+#include <windows.h>
+#include <cstdlib>
+#include <math.h>
+#include <conio.h>
+#include <string>
+#include <map>
+
+using namespace std;
+
+//  Sizes
+const unsigned int GUIX = 47;
+const unsigned int GUIY = 20;
+
+//  Corners
+const char cr1 = (char)(218);
+const char cr2 = (char)(191);
+const char cr3 = (char)(192);
+const char cr4 = (char)(217);
+
+///---------------------------------GUI TEMPLATES--------------------------------------------------------------------------------------------------------------------------------------------------
+
+char EmptyGUI[GUIY][GUIX] =
+{
+//   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',    // 0
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 1
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 2
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 3
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 4
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 5
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 6
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 7
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 8
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 9
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 10
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 11
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 12
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 13
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 14
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 15
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 16
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 17
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 18
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '     // 19
+};
+
+char StartGUI[GUIY][GUIX] =
+{
+//   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',    // 0
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 1
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 2
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ','#','#','#','#','#',' ','#','#',' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 3
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ','#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 4
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#','#','#',' ',' ',' ','#',' ',' ',' ','#',' ','#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 5
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 6
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 7
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 8
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 9
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 10
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 11
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 12
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 13
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 14
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 15
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 16
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 17
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 18
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '     // 19
+};
+
+///---------------------------------GLOBAL VALUES--------------------------------------------------------------------------------------------------------------------------------------------------
+
+string Language = "EN";
+
+///---------------------------------TEXTS----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+map<string, string> insertCardText;
+map<string, string> adminText;
+map<string, string> backText;
+map<string, string> exitText;
+map<string, string> finishText;
+
+
+map<string, string> depositText;
+map<string, string> cardNumberText;
+map<string, string> depositMoneyText;
+map<string, string> insertMoneyText;
+map<string, string> moneyInsertedText;
+map<string, string> moneyInsertErrorText;
+map<string, string> endingText;
+map<string, string> TakeOutCardText;
+
+map<string, string> withdrawText;
+map<string, string> customText;
+
+
+map<string, string> wrongNumberText;
+
+
+map<string, string> emptyText;
+
+///---------------------------------ACTIONS 1------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void ChangeGUIToStart();
+void ChangeGUIToInsertCard();
+void placeholderAction();
+void placeholderAction2();
+void CardInput();
+
+///---------------------------------MAIN CLASSES---------------------------------------------------------------------------------------------------------------------------------------------------
+
+class Box{
+protected:
+    map<string, string> text;
+    map<string, string> placeholderText;
+    string type;
+    Box *T, *R, *B, *L;
+    bool centered, visible, secret, frame, selected;
+    unsigned int startX, startY, lenX, lenY;
+    void (*ButtonAction)();
+    void (*TextLabelAction)(string);
+
+public:
+    char** Out;
+
+    Box(){}
+
+    virtual Box* Switch(char side){}
+
+    virtual void setSelect(bool isSelected){}
+
+    virtual string getText(){}
+
+    virtual string getInputedText(){}
+
+    virtual void setText(map<string, string> txt){}
+
+    virtual void inputText(char c){}
+
+    virtual void subInputText(){}
+
+    virtual void clearInput(){}
+
+    virtual void setOutput(){}
+
+    virtual void setOutputText(){}
+
+    virtual void printBox(){}
+
+    virtual int getStartX(){}
+
+    virtual int getStartY(){}
+
+    virtual int getLen(){}
+
+    virtual bool isVisible(){}
+
+    virtual void setVisible(bool _visible){}
+
+    virtual void setT(Box *box){}
+
+    virtual void setR(Box *box){}
+
+    virtual void setB(Box *box){}
+
+    virtual void setL(Box *box){}
+
+    virtual void setPlaceholderText(string placeholder){}
+
+    virtual string getType(){}
+
+    virtual void doAction(){}
+
+    virtual ~Box(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; ++i) {
+                delete[] Out[i];
+            }
+            delete[] Out;
+        }
+    }
+};
+
+class Button : public Box{
+private:
+    string smallPlaceholderText = "";
+public:
+    Button(unsigned int sx,
+            unsigned int sy,
+            unsigned int lX,
+            bool centeredText = true,
+            Box* Top = nullptr,
+            Box* Right = nullptr,
+            Box* Bottom = nullptr,
+            Box* Left = nullptr,
+            bool _visible = true,
+            bool _secret = false,
+            bool haveFrame = true)
+    {
+        type = "Button";
+
+        visible = _visible;
+        secret = _secret;
+        frame = haveFrame;
+        selected = false;
+
+        T = Top;
+        R = Right;
+        B = Bottom;
+        L = Left;
+        centered = centeredText;
+
+        startX = sx;
+        startY = sy;
+        lenX = lX;
+        lenY = 3;
+
+        Out = new char*[lenY];
+        for(int i=0; i<3; i++)
+            Out[i] = new char[1];
+        setOutput();
+    }
+
+    Box* Switch(char side){
+        switch(side){
+        case 'T':
+            if(T != nullptr && T->isVisible())
+                return T;
+            else
+                return this;
+        case 'R':
+            if(R != nullptr && R->isVisible())
+                return R;
+            else
+                return this;
+        case 'B':
+            if(B != nullptr && B->isVisible())
+                return B;
+            else
+                return this;
+        case 'L':
+            if(L != nullptr && L->isVisible())
+                return L;
+            else
+                return this;
+        default:
+            cout<<"ERROR 404 - NO SIDE AS "<<side<<"!"<<endl;
+            return this;
+        }
+    }
+
+    void setSelect(bool isSelected){
+        selected = isSelected;
+    }
+
+    string getText(){
+        return text[Language];
+    }
+
+    void setText(map<string, string> txt){
+        text = txt;
+    }
+
+    void setPlaceholderText(string placeholder){
+        smallPlaceholderText = placeholder;
+    }
+
+    void setOutput(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; i++) {
+                if (Out[i] != nullptr) {
+                    delete[] Out[i];
+                    Out[i] = nullptr;
+                }
+            }
+        }
+        delete[] Out;
+
+        Out = new char*[lenY];
+        for(unsigned int i=0; i<lenY; i++){
+            Out[i] = new char[lenX];
+            for(unsigned int j=0; j<lenX; j++){
+                if(i==0){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr1;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr2;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else if(i==2){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr3;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr4;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else{
+                    if(j == 0 || j == lenX-1){
+                        if(secret || !frame)
+                            Out[i][j] = ' ';
+                        else
+                            Out[i][j] = '|';
+                    }
+                    else
+                        Out[i][j] = ' ';
+                }
+            }
+        }
+        setOutputText();
+    }
+
+    void setOutputText(){
+        int i=0;
+        string txt = text[Language], placeholderTxt = smallPlaceholderText;
+        int len = txt.length();
+        int margin = round((lenX-4 - len)/2);
+
+        for(unsigned int j=2; j<lenX-2; j++)
+            Out[1][j] = ' ';
+
+        if(len>0){
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = txt[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = txt[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+        }
+        else{
+            len = placeholderTxt.length();
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+
+    void printBox(){
+        if(visible){
+            cout << "\033[" << startY << ";" << startX << "H";
+            cout << "\033[7m";
+            if(selected)
+                cout << "\033[44m";
+            for(unsigned int i=0; i<lenY; i++){
+                for(unsigned int j=0; j<lenX; j++){
+                    cout << Out[i][j];
+                }
+                cout << "\033[1B" << "\033[" << lenX << "D";
+            }
+            cout << "\033[0m";
+        }
+    }
+
+    int getStartX(){
+        return startX;
+    }
+
+    int getStartY(){
+        return startY;
+    }
+
+    int getLen(){
+        return lenX;
+    }
+
+    bool isVisible(){
+        return visible;
+    }
+
+    void setVisible(bool _visible){
+        visible = _visible;
+    }
+
+    void setT(Box *box){
+        T = box;
+    }
+
+    void setR(Box *box){
+        R = box;
+    }
+
+    void setB(Box *box){
+        B = box;
+    }
+
+    void setL(Box *box){
+        L = box;
+    }
+
+    string getType(){
+        return type;
+    }
+
+    void setButtonAction(void (*newAction)()){
+        ButtonAction = newAction;
+    }
+
+    void doAction(){
+        ButtonAction();
+        Sleep(100);
+    }
+
+    ~Button(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; ++i) {
+                delete[] Out[i];
+            }
+            delete[] Out;
+        }
+    }
+};
+
+class TextLabel : public Box{
+private:
+    string inputedText;
+public:
+    TextLabel(unsigned int sx,
+            unsigned int sy,
+            unsigned int lX,
+            bool centeredText = true,
+            Box* Top = nullptr,
+            Box* Right = nullptr,
+            Box* Bottom = nullptr,
+            Box* Left = nullptr,
+            bool _visible = true,
+            bool _secret = false,
+            bool haveFrame = true)
+    {
+        type = "TextLabel";
+
+        visible = _visible;
+        secret = _secret;
+        frame = haveFrame;
+        selected = false;
+
+        T = Top;
+        R = Right;
+        B = Bottom;
+        L = Left;
+        centered = centeredText;
+
+        startX = sx;
+        startY = sy;
+        lenX = lX;
+        lenY = 3;
+
+        Out = new char*[lenY];
+        for(int i=0; i<3; i++)
+            Out[i] = new char[1];
+        setOutput();
+    }
+
+    Box* Switch(char side){
+        switch(side){
+        case 'T':
+            if(T != nullptr && T->isVisible())
+                return T;
+            else
+                return this;
+        case 'R':
+            if(R != nullptr && R->isVisible())
+                return R;
+            else
+                return this;
+        case 'B':
+            if(B != nullptr && B->isVisible())
+                return B;
+            else
+                return this;
+        case 'L':
+            if(L != nullptr && L->isVisible())
+                return L;
+            else
+                return this;
+        default:
+            cout<<"ERROR 404 - NO SIDE AS "<<side<<"!"<<endl;
+            return this;
+        }
+    }
+
+    void setSelect(bool isSelected){
+        selected = isSelected;
+    }
+
+    string getText(){
+        return text[Language];
+    }
+
+    string getInputedText(){
+        return inputedText;
+    }
+
+    void inputText(char c){
+        inputedText+=c;
+        setOutputText();
+    }
+
+    void subInputText(){
+        inputedText.pop_back();
+        setOutputText();
+    }
+
+    void clearInput(){
+        inputedText = "";
+    }
+
+    void setText(map<string, string> txt){
+        text = txt;
+    }
+
+    void setOutput(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; i++) {
+                if (Out[i] != nullptr) {
+                    delete[] Out[i];
+                    Out[i] = nullptr;
+                }
+            }
+        }
+        delete[] Out;
+
+        Out = new char*[lenY];
+        for(unsigned int i=0; i<lenY; i++){
+            Out[i] = new char[lenX];
+            for(unsigned int j=0; j<lenX; j++){
+                if(i==0){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr1;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr2;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else if(i==2){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr3;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr4;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else{
+                    if(j == 0 || j == lenX-1){
+                        if(secret || !frame)
+                            Out[i][j] = ' ';
+                        else
+                            Out[i][j] = '|';
+                    }
+                    else
+                        Out[i][j] = ' ';
+                }
+            }
+        }
+        setOutputText();
+    }
+
+    void setOutputText(){
+        int i=0;
+        string placeholderTxt = placeholderText[Language];
+        int len = inputedText.length();
+        int margin = round((lenX-4 - len)/2);
+
+        for(unsigned int j=2; j<lenX-2; j++)
+            Out[1][j] = ' ';
+
+        if(len>0){
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = inputedText[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = inputedText[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+        }
+        else{
+            len = placeholderTxt.length();
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+
+    void printBox(){
+        if(visible){
+            cout << "\033[" << startY << ";" << startX << "H";
+            cout << "\033[7m";
+            if(selected)
+                cout << "\033[44m";
+            for(unsigned int i=0; i<lenY; i++){
+                for(unsigned int j=0; j<lenX; j++){
+                    cout << Out[i][j];
+                }
+                cout << "\033[1B" << "\033[" << lenX << "D";
+            }
+            cout << "\033[0m";
+        }
+    }
+
+    int getStartX(){
+        return startX;
+    }
+
+    int getStartY(){
+        return startY;
+    }
+
+    int getLen(){
+        return lenX;
+    }
+
+    bool isVisible(){
+        return visible;
+    }
+
+    void setVisible(bool _visible){
+        visible = _visible;
+    }
+
+    void setT(Box *box){
+        T = box;
+    }
+
+    void setR(Box *box){
+        R = box;
+    }
+
+    void setB(Box *box){
+        B = box;
+    }
+
+    void setL(Box *box){
+        L = box;
+    }
+
+    void setPlaceholderText(map<string, string> placeholder){
+        placeholderText = placeholder;
+    }
+
+    string getType(){
+        return type;
+    }
+
+    void setTextLabelAction(void (*newAction)(string)){
+        TextLabelAction = newAction;
+    }
+
+    void doAction(){
+        TextLabelAction(inputedText);
+        Sleep(100);
+    }
+
+    ~TextLabel(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; ++i) {
+                delete[] Out[i];
+            }
+            delete[] Out;
+        }
+    }
+};
+
+class TextBox : public Box{
+public:
+    TextBox(unsigned int sx,
+            unsigned int sy,
+            unsigned int lX,
+            bool centeredText = true,
+            Box* Top = nullptr,
+            Box* Right = nullptr,
+            Box* Bottom = nullptr,
+            Box* Left = nullptr,
+            bool _visible = true,
+            bool _secret = false,
+            bool haveFrame = false)
+    {
+        type = "TextBox";
+
+        visible = _visible;
+        secret = _secret;
+        frame = haveFrame;
+        selected = false;
+
+        T = Top;
+        R = Right;
+        B = Bottom;
+        L = Left;
+        centered = centeredText;
+
+        startX = sx;
+        startY = sy;
+        lenX = lX;
+        lenY = 3;
+
+        Out = new char*[lenY];
+        for(int i=0; i<3; i++)
+            Out[i] = new char[1];
+        setOutput();
+    }
+
+    Box* Switch(char side){
+        switch(side){
+        case 'T':
+            if(T != nullptr && T->isVisible())
+                return T;
+            else
+                return this;
+        case 'R':
+            if(R != nullptr && R->isVisible())
+                return R;
+            else
+                return this;
+        case 'B':
+            if(B != nullptr && B->isVisible())
+                return B;
+            else
+                return this;
+        case 'L':
+            if(L != nullptr && L->isVisible())
+                return L;
+            else
+                return this;
+        default:
+            cout<<"ERROR 404 - NO SIDE AS "<<side<<"!"<<endl;
+            return this;
+        }
+    }
+
+    string getText(){
+        return text[Language];
+    }
+
+    void setText(map<string, string> txt){
+        text = txt;
+    }
+
+    void setOutput(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; i++) {
+                if (Out[i] != nullptr) {
+                    delete[] Out[i];
+                    Out[i] = nullptr;
+                }
+            }
+        }
+        delete[] Out;
+
+        Out = new char*[lenY];
+        for(unsigned int i=0; i<lenY; i++){
+            Out[i] = new char[lenX];
+            for(unsigned int j=0; j<lenX; j++)
+                Out[i][j] = ' ';
+        }
+        setOutputText();
+    }
+
+    void setOutputText(){
+        int i=0;
+        string txt = text[Language], placeholderTxt = placeholderText[Language];
+        int len = txt.length();
+        int margin = round((lenX-4 - len)/2);
+
+        for(unsigned int j=2; j<lenX-2; j++)
+            Out[1][j] = ' ';
+
+        if(len>0){
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = txt[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = txt[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+        }
+        else{
+            len = placeholderTxt.length();
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+
+    void printBox(){
+        if(visible){
+            cout << "\033[" << startY << ";" << startX << "H";
+            cout << "\033[7m";
+            if(selected)
+                cout << "\033[44m";
+            for(unsigned int i=0; i<lenY; i++){
+                for(unsigned int j=0; j<lenX; j++){
+                    cout << Out[i][j];
+                }
+                cout << "\033[1B" << "\033[" << lenX << "D";
+            }
+            cout << "\033[0m";
+        }
+    }
+
+    int getStartX(){
+        return startX;
+    }
+
+    int getStartY(){
+        return startY;
+    }
+
+    int getLen(){
+        return lenX;
+    }
+
+    bool isVisible(){
+        return visible;
+    }
+
+    void setVisible(bool _visible){
+        visible = _visible;
+    }
+
+    void setT(Box *box){
+        T = box;
+    }
+
+    void setR(Box *box){
+        R = box;
+    }
+
+    void setB(Box *box){
+        B = box;
+    }
+
+    void setL(Box *box){
+        L = box;
+    }
+
+    string getType(){
+        return type;
+    }
+
+    ~TextBox(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; ++i) {
+                delete[] Out[i];
+            }
+            delete[] Out;
+        }
+    }
+};
+
+class LangBox : public Box{
+private:
+    string currentLang = "EN";
+
+public:
+    LangBox(unsigned int sx,
+            unsigned int sy,
+            unsigned int lX,
+            bool centeredText = true,
+            Box* Top = nullptr,
+            Box* Right = nullptr,
+            Box* Bottom = nullptr,
+            Box* Left = nullptr,
+            bool _visible = true,
+            bool _secret = false,
+            bool haveFrame = true)
+    {
+        type = "LangBox";
+        currentLang = "EN";
+
+        text["EN"] = "EN";
+        text["PL"] = "PL";
+
+        visible = _visible;
+        secret = _secret;
+        frame = haveFrame;
+        selected = false;
+
+        T = Top;
+        R = Right;
+        B = Bottom;
+        L = Left;
+        centered = centeredText;
+
+        startX = sx;
+        startY = sy;
+        lenX = lX;
+        lenY = 3;
+
+        Out = new char*[lenY];
+        for(int i=0; i<3; i++)
+            Out[i] = new char[1];
+        setOutput();
+    }
+
+    changeLang(){
+        if(currentLang == "EN")
+            currentLang = "PL";
+        else
+            currentLang = "EN";
+
+        Language = currentLang;
+        setPlaceholderText(currentLang);
+        setOutputText();
+    }
+
+    Box* Switch(char side){
+        switch(side){
+        case 'T':
+            if(T != nullptr && T->isVisible())
+                return T;
+            else
+                return this;
+        case 'R':
+            if(R != nullptr && R->isVisible())
+                return R;
+            else
+                return this;
+        case 'B':
+            if(B != nullptr && B->isVisible())
+                return B;
+            else
+                return this;
+        case 'L':
+            if(L != nullptr && L->isVisible())
+                return L;
+            else
+                return this;
+        default:
+            cout<<"ERROR 404 - NO SIDE AS "<<side<<"!"<<endl;
+            return this;
+        }
+    }
+
+    void setSelect(bool isSelected){
+        selected = isSelected;
+    }
+
+    string getText(){
+        return text[Language];
+    }
+
+    void setOutput(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; i++) {
+                if (Out[i] != nullptr) {
+                    delete[] Out[i];
+                    Out[i] = nullptr;
+                }
+            }
+        }
+        delete[] Out;
+
+        Out = new char*[lenY];
+        for(unsigned int i=0; i<lenY; i++){
+            Out[i] = new char[lenX];
+            for(unsigned int j=0; j<lenX; j++){
+                if(i==0){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr1;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr2;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else if(i==2){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr3;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr4;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else{
+                    if(j == 0 || j == lenX-1){
+                        if(secret || !frame)
+                            Out[i][j] = ' ';
+                        else
+                            Out[i][j] = '|';
+                    }
+                    else
+                        Out[i][j] = ' ';
+                }
+            }
+        }
+        setOutputText();
+    }
+
+    void setOutputText(){
+        int i=0;
+        string txt = text[Language], placeholderTxt = placeholderText[Language];
+        int len = txt.length();
+        int margin = round((lenX-4 - len)/2);
+
+        for(unsigned int j=2; j<lenX-2; j++)
+            Out[1][j] = ' ';
+
+        if(len>0){
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = txt[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = txt[i];
+                        i++;
+                    }
+                    else
+                        Out[1][j] = ' ';
+                }
+            }
+        }
+        else{
+            len = placeholderTxt.length();
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderTxt[i];
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+
+    void printBox(){
+        if(visible){
+            cout << "\033[" << startY << ";" << startX << "H";
+            cout << "\033[7m";
+            if(selected)
+                cout << "\033[44m";
+            for(unsigned int i=0; i<lenY; i++){
+                for(unsigned int j=0; j<lenX; j++){
+                    cout << Out[i][j];
+                }
+                cout << "\033[1B" << "\033[" << lenX << "D";
+            }
+            cout << "\033[0m";
+        }
+    }
+
+    int getStartX(){
+        return startX;
+    }
+
+    int getStartY(){
+        return startY;
+    }
+
+    int getLen(){
+        return lenX;
+    }
+
+    bool isVisible(){
+        return visible;
+    }
+
+    void setVisible(bool _visible){
+        visible = _visible;
+    }
+
+    void setT(Box *box){
+        T = box;
+    }
+
+    void setR(Box *box){
+        R = box;
+    }
+
+    void setB(Box *box){
+        B = box;
+    }
+
+    void setL(Box *box){
+        L = box;
+    }
+
+    string getType(){
+        return type;
+    }
+
+    void doAction(){
+        changeLang();
+    }
+
+    ~LangBox(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; ++i) {
+                delete[] Out[i];
+            }
+            delete[] Out;
+        }
+    }
+};
+
+class GUI{
+private:
+    string name;
+    Box** boxes;
+    unsigned int box_amount, currentBoxes;
+    char GUI_OUT[GUIY][GUIX];
+public:
+    GUI(){}
+
+    GUI(string GUI_name, unsigned int _box_amount){
+        name = GUI_name;
+        box_amount = _box_amount;
+        currentBoxes = 0;
+        boxes = new Box*[box_amount];
+        for(int i=0; i<box_amount; i++){
+            boxes[i] = nullptr;
+        }
+
+        generateGUI();
+    }
+
+    GUI& operator=(const GUI& gui){
+        name = gui.name;
+        box_amount = gui.box_amount;
+        currentBoxes = 0;
+        boxes = new Box*[box_amount];
+        for(int i=0; i<box_amount; i++){
+            boxes[i] = nullptr;
+        }
+
+        generateGUI();
+    }
+
+    string getName(){
+        return name;
+    }
+
+    void printGUI(){
+        cout << "\033[7m";
+        for(unsigned int i=0; i<GUIY; i++){
+            for(unsigned int j=0; j<GUIX; j++){
+                if(GUI_OUT[i][j] == '#')
+                    cout << "\033[0;30;40m" << GUI_OUT[i][j] << "\033[0;7m";
+                else
+                    cout<<GUI_OUT[i][j];
+            }
+            cout<<endl;
+        }
+        cout << "\033[0m" << endl;
+
+        for(unsigned int i=0; i<box_amount; i++){
+            if(boxes[i]!=nullptr)
+                boxes[i]->printBox();
+        }
+    }
+
+    void UpdateGUI(){
+        for(int i=0; i<box_amount; i++)
+            boxes[i]->setOutputText();
+        printGUI();
+    }
+
+    void generateGUI(){
+        if(name == "START")
+            setStartGUI();
+        else{
+            for(unsigned int i=0; i<GUIY; i++){
+                for(unsigned int j=0; j<GUIX; j++){
+                    GUI_OUT[i][j] = EmptyGUI[i][j];
+                }
+            }
+        }
+    }
+
+    void addBox(Box *box){
+        boxes[currentBoxes] = box;
+        currentBoxes++;
+        //generateBox(box);
+    }
+
+    void setStartGUI(){
+        for(unsigned int i=0; i<GUIY; i++){
+            for(unsigned int j=0; j<GUIX; j++){
+                GUI_OUT[i][j] = StartGUI[i][j];
+            }
+        }
+    }
+
+    void setBoxVisible(unsigned int boxNumber, bool visible){
+        boxes[boxNumber]->setVisible(visible);
+        //generateBox(boxes[boxNumber]);
+    }
+
+    Box *getBox(int number){
+        return boxes[number];
+    }
+
+    void setBoxNeighbor(unsigned int boxNumber, char side, Box *box){
+        switch(side){
+            case 'T':
+                boxes[boxNumber]->setT(box);
+                break;
+            case 'B':
+                boxes[boxNumber]->setB(box);
+                break;
+            case 'R':
+                boxes[boxNumber]->setR(box);
+                break;
+            case 'L':
+                boxes[boxNumber]->setL(box);
+                break;
+        }
+    }
+
+    void showError(map<string, string> err){
+        boxes[2]->setText(err);
+    }
+
+    ~GUI(){}
+};
+
+///---------------------------------GUIS AND BUTTON------------------------------------------------------------------------------------------------------------------------------------------------
+
+GUI *currentGUI;
+Box *currentBox;
+
+GUI *Start;
+GUI *InsertCard;
+GUI *Choice;
+
+GUI *Deposit;
+
+GUI *Withdraw;
+GUI *CustomWithdraw;
+
+GUI *TakeOutCard;
+
+///---------------------------------ACTIONS 2------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void ChangeGUIToStart(){
+    currentGUI = Start;
+    currentBox->setSelect(false);
+    currentBox = currentGUI->getBox(0);
+    currentBox->setSelect(true);
+}
+
+void ChangeGUIToInsertCard(){
+    currentGUI = InsertCard;
+    currentBox->setSelect(false);
+    currentBox = currentGUI->getBox(0);
+    currentBox->setSelect(true);
+}
+
+void ChangeGUIToChoice(){
+    currentGUI->showError(insertCardText);
+    currentBox->clearInput();
+
+    currentGUI = Choice;
+    currentBox->setSelect(false);
+    currentBox = currentGUI->getBox(0);
+    currentBox->setSelect(true);
+}
+
+void ChangeGUIToDeposit(){
+    currentGUI = Deposit;
+    currentBox->setSelect(false);
+    currentBox = currentGUI->getBox(0);
+    currentBox->setSelect(true);
+}
+
+void ChangeGUIToTakeOutCard(){
+    currentGUI = TakeOutCard;
+    currentBox->setSelect(false);
+    currentBox = currentGUI->getBox(1);
+    currentBox->setSelect(true);
+}
+
+void ChangeGUIToWithdraw(){
+    currentGUI = Withdraw;
+    currentBox->setSelect(false);
+    currentBox = currentGUI->getBox(0);
+    currentBox->setSelect(true);
+}
+
+
+void insertMoneyOnAccount(unsigned int money){ //  WIP
+
+}
+
+void changeMoneyInCasket(unsigned int type, int amount){ //  WIP
+
+}
+
+
+void moneyInserted(bool b){
+    if(b)
+        currentGUI->showError(moneyInsertedText);
+    else
+        currentGUI->showError(moneyInsertErrorText);
+}
+
+void CardInput(string number){
+    // Check if card is in database.
+    string card = "1221";   //  Temp number
+
+
+    if(card == number){
+        currentGUI->showError(insertCardText);
+        ChangeGUIToChoice();
+    }
+    else{
+        currentGUI->showError(wrongNumberText);
+    }
+}
+
+void MoneyInput(string input){
+    size_t dash = input.find("-");
+    if(dash != string::npos){
+        string x_str = input.substr(0, dash);
+        string y_str = input.substr(dash + 1);
+
+        if (x_str.empty() || y_str.empty()){
+            // error
+        }
+        else{
+            int x = stoi(x_str),
+                y = stoi(y_str);
+
+            if (x % 10 == 0 && x > 0&& y > 0){
+                insertMoneyOnAccount(x*y);
+                changeMoneyInCasket(x, y);
+                moneyInserted(true);
+            }
+            else{
+                moneyInserted(false);
+            }
+        }
+    }
+    else{
+        moneyInserted(false);
+    }
+}
+
+
+void placeholderAction(){}
+void placeholderAction2(string){}
+
+///---------------------------------SETUP---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void setupStartGUI(){
+
+    Start = new GUI("START", 3);
+    Button *insertButton = new Button(16, 10, 17);
+    Button *adminButton = new Button(16, 13, 17, true, nullptr, nullptr, nullptr, nullptr, false, true, true);
+    LangBox *lang = new LangBox(35, 10, 6);
+
+    insertButton->setText(insertCardText);
+    insertButton->setButtonAction(ChangeGUIToInsertCard);
+    insertButton->setOutput();
+
+    adminButton->setText(adminText);
+    adminButton->setButtonAction(placeholderAction);
+    adminButton->setOutput();
+
+    Start->addBox(insertButton);
+    Start->addBox(adminButton);
+    Start->addBox(lang);
+
+    Start->setBoxNeighbor(0, 'B', Start->getBox(1));
+    Start->setBoxNeighbor(1, 'T', Start->getBox(0));
+    Start->setBoxNeighbor(0, 'R', Start->getBox(2));
+    Start->setBoxNeighbor(2, 'L', Start->getBox(0));
+}
+
+void setupInsertCardGUI(){
+    InsertCard = new GUI("INSERT_CARD", 3);
+    TextBox *cardTextBox = new TextBox(6, 6, 37);
+    TextLabel *cardTextLabel = new TextLabel(16, 10, 17, false, nullptr, nullptr, nullptr, nullptr);
+    Button *backToStart = new Button(19, 13, 10);
+
+    cardTextBox->setText(insertCardText);
+    cardTextBox->setOutput();
+
+    cardTextLabel->setPlaceholderText(cardNumberText);
+    cardTextLabel->setTextLabelAction(CardInput);
+    cardTextLabel->setOutput();
+
+    backToStart->setText(backText);
+    backToStart->setButtonAction(ChangeGUIToStart);
+    backToStart->setOutput();
+
+    InsertCard->addBox(cardTextLabel);
+    InsertCard->addBox(backToStart);
+    InsertCard->addBox(cardTextBox);
+
+    InsertCard->setBoxNeighbor(0, 'B', InsertCard->getBox(1));
+    InsertCard->setBoxNeighbor(1, 'T', InsertCard->getBox(0));
+}
+
+void setupChoiceGUI(){
+    Choice = new GUI("CHOICE", 3);
+    Button *withdrawButton = new Button(9, 10, 14);
+    Button *depositButton = new Button(26, 10, 14);
+    Button *backToStart = new Button(19, 14, 10);
+
+    depositButton->setText(depositText);
+    depositButton->setButtonAction(ChangeGUIToDeposit);
+    depositButton->setOutput();
+
+    withdrawButton->setText(withdrawText);
+    withdrawButton->setButtonAction(ChangeGUIToWithdraw);
+    withdrawButton->setOutput();
+
+    backToStart->setText(exitText);
+    backToStart->setButtonAction(ChangeGUIToStart);
+    backToStart->setOutput();
+
+    Choice->addBox(withdrawButton);
+    Choice->addBox(depositButton);
+    Choice->addBox(backToStart);
+
+    Choice->setBoxNeighbor(0, 'R', Choice->getBox(1));
+    Choice->setBoxNeighbor(1, 'L', Choice->getBox(0));
+    Choice->setBoxNeighbor(0, 'B', Choice->getBox(2));
+    Choice->setBoxNeighbor(1, 'B', Choice->getBox(2));
+    Choice->setBoxNeighbor(2, 'T', Choice->getBox(0));
+}
+
+void setupDepositGUI(){
+    Deposit = new GUI("DEPOSIT", 3);
+    TextBox *depositMoney = new TextBox(6, 6, 37);
+    TextLabel *money = new TextLabel(13, 10, 23, false, nullptr, nullptr, nullptr, nullptr);
+    Button *finishButton = new Button(14, 13, 12, true, nullptr, nullptr, nullptr, nullptr, true);
+    Button *backButton = new Button(28, 13, 12, true, nullptr, nullptr, nullptr, nullptr, true);
+
+    depositMoney->setText(depositMoneyText);
+    depositMoney->setOutput();
+
+    money->setPlaceholderText(insertMoneyText);
+    money->setTextLabelAction(MoneyInput);
+    money->setOutput();
+
+    finishButton->setText(finishText);
+    finishButton->setButtonAction(ChangeGUIToTakeOutCard);
+    finishButton->setOutput();
+
+    Deposit->addBox(money);
+    Deposit->addBox(finishButton);
+    Deposit->addBox(depositMoney);
+
+    Deposit->setBoxNeighbor(0, 'B', Deposit->getBox(1));
+    Deposit->setBoxNeighbor(1, 'T', Deposit->getBox(0));
+}
+
+void setupTakeOutCardGUI(){
+
+    TakeOutCard = new GUI("TAKE_OUT_CARD", 2);
+    TextBox *takeText = new TextBox(13, 9, 23);
+    Button *takeOut = new Button(14, 13, 21);
+
+    takeText->setText(endingText);
+    takeText->setOutput();
+
+    takeOut->setText(TakeOutCardText);
+    takeOut->setButtonAction(ChangeGUIToStart);
+    takeOut->setOutput();
+
+    TakeOutCard->addBox(takeText);
+    TakeOutCard->addBox(takeOut);
+}
+
+void setupWithdrawGUI(){
+    Withdraw = new GUI("WITHDRAW", 5);
+    Button *w50 = new Button(10, 6, 12, false);
+    Button *w100 = new Button(10, 10, 12, false);
+    Button *w200 = new Button(27, 6, 12, false);
+    Button *custom = new Button(27, 10, 12, false);
+    Button *backButton = new Button(19, 15, 10);
+
+    w50->setPlaceholderText("50");
+    custom->setText(emptyText);
+    w50->setOutput();
+
+    w100->setPlaceholderText("100");
+    custom->setText(emptyText);
+    w100->setOutput();
+
+    w200->setPlaceholderText("200");
+    custom->setText(emptyText);
+    w200->setOutput();
+
+    custom->setText(customText);
+    custom->setOutput();
+
+    backButton->setText(exitText);
+    backButton->setButtonAction(ChangeGUIToStart);
+    backButton->setOutput();
+
+    Withdraw->addBox(w50);
+    Withdraw->addBox(w100);
+    Withdraw->addBox(w200);
+    Withdraw->addBox(custom);
+    Withdraw->addBox(backButton);
+
+    Withdraw->setBoxNeighbor(0, 'R', Withdraw->getBox(2));
+    Withdraw->setBoxNeighbor(0, 'B', Withdraw->getBox(1));
+
+    Withdraw->setBoxNeighbor(1, 'R', Withdraw->getBox(3));
+    Withdraw->setBoxNeighbor(1, 'T', Withdraw->getBox(0));
+    Withdraw->setBoxNeighbor(1, 'B', Withdraw->getBox(4));
+
+    Withdraw->setBoxNeighbor(2, 'L', Withdraw->getBox(0));
+    Withdraw->setBoxNeighbor(2, 'B', Withdraw->getBox(3));
+
+    Withdraw->setBoxNeighbor(3, 'T', Withdraw->getBox(2));
+    Withdraw->setBoxNeighbor(3, 'L', Withdraw->getBox(1));
+    Withdraw->setBoxNeighbor(3, 'B', Withdraw->getBox(4));
+
+    Withdraw->setBoxNeighbor(4, 'T', Withdraw->getBox(1));
+}
+
+
+void SETUP_TEXTS(){
+
+// insertCardText
+insertCardText["EN"] = "INSERT CARD";
+insertCardText["PL"] = "WLOZ KARTE";
+
+// adminText
+adminText["EN"] = "ADMIN";
+adminText["PL"] = "ADMIN";
+
+// withdrawText
+withdrawText["EN"] = "WITHDRAW";
+withdrawText["PL"] = "WYPLAC";
+
+// depositText
+depositText["EN"] = "DEOPSIT";
+depositText["PL"] = "WPLAC";
+
+// exitText
+exitText["EN"] = "EXIT";
+exitText["PL"] = "WYJDZ";
+
+// backText
+backText["EN"] = "BACK";
+backText["PL"] = "WROC";
+
+// cardNumberText
+cardNumberText["EN"] = "CARD NUMBER";
+cardNumberText["PL"] = "NUMER KARTY";
+
+// wrongNumberText
+wrongNumberText["EN"] = "INCORRECT NUMBER";
+wrongNumberText["PL"] = "NIEPOPRAWNY NUMER";
+
+// depositMoneyText
+depositMoneyText["EN"] = "INSERT MONEY";
+depositMoneyText["PL"] = "PODAJ KWOTE";
+
+// insertMoneyText
+insertMoneyText["EN"] = "TYPE-QUANTITY";
+insertMoneyText["PL"] = "NOMINAL-ILOSC";
+
+// moneyInsertedText
+moneyInsertedText["EN"] = "MONEY DEPOSITED";
+moneyInsertedText["PL"] = "WPLACONO PIENIADZE";
+
+// moneyInsertErrorText
+moneyInsertErrorText["EN"] = "WRONG INPUT";
+moneyInsertErrorText["PL"] = "ZLE WARTOSCI";
+
+// finishText
+finishText["EN"] = "FINISH";
+finishText["PL"] = "ZAKONCZ";
+
+// endingText
+endingText["EN"] = "OPERATION FINISHED";
+endingText["PL"] = "OPERACJA ZAKONCZONA";
+
+// TakeOutCardText
+TakeOutCardText["EN"] = "TAKE OUT CARD";
+TakeOutCardText["PL"] = "WYCIAGNIJ KARTE";
+
+// customText
+customText["EN"] = "CUSTOM";
+customText["PL"] = "WLASNE";
+
+
+// emptyText
+emptyText["EN"] = "";
+emptyText["PL"] = "";
+
+}
+
+void SETUP(){
+    cout<<"Setting up ATM:"<<endl<<endl;
+
+    cout<<"Setting texts:";
+    SETUP_TEXTS();
+    cout<<" - done"<<endl;
+
+    cout<<"StartGUI";
+    setupStartGUI();
+    cout<<" - done"<<endl<<"InputCardGUI";
+    setupInsertCardGUI();
+    cout<<" - done"<<endl<<"ChoiceGUI";
+    setupChoiceGUI();
+    cout<<" - done"<<endl<<"DepositGUI";
+    setupDepositGUI();
+    cout<<" - done"<<endl<<"TakeOutCardGUI";
+    setupTakeOutCardGUI();
+    cout<<" - done"<<endl<<"WithdrawGUI";
+    setupWithdrawGUI();
+    cout<<" - done"<<endl;
+
+    cout<<"Setting starting values";
+    currentGUI = Start;
+    currentBox = currentGUI->getBox(0);
+    cout<<currentBox->getText();
+    currentBox->setSelect(true);
+    cout<<" - done"<<endl;
+
+    cout<<endl<<"Setting up finished";
+    //for(int i=0; i<3; i++){
+    //    cout<<".";
+    //    Sleep(1000);
+    //}
+    system("CLS");
+}
+
+///---------------------------------MAIN PROGRAM---------------------------------------------------------------------------------------------------------------------------------------------------
+
+int main(){
+
+    SETUP();
+
+    string backgroundInput = "", admin = "admin", stop = "stop";
+
+    int ic;
+    char cc;
+    do{
+        cout<<"\033[H";
+        currentGUI->UpdateGUI();
+        cout << "\033[H\033[21B";
+        cout << "[" << backgroundInput << "]    " << endl;
+
+        while(!_kbhit()){}
+        ic = _getch();
+        cc = ic;
+        switch(ic)
+        {
+        case 224:  // Arrows
+            switch (_getch())
+            {
+            case 72: // Up
+                currentBox->setSelect(false);
+                currentBox = currentBox->Switch('T');
+                currentBox->setSelect(true);
+                break;
+            case 80: // Down
+                currentBox->setSelect(false);
+                currentBox = currentBox->Switch('B');
+                currentBox->setSelect(true);
+                break;
+            case 75: // Left
+                currentBox->setSelect(false);
+                currentBox = currentBox->Switch('L');
+                currentBox->setSelect(true);
+                break;
+            case 77: // Right
+                currentBox->setSelect(false);
+                currentBox = currentBox->Switch('R');
+                currentBox->setSelect(true);
+                break;
+            default:
+                cout<<"Cannot identify arrow.";
+                break;
+            }
+        default:
+            if(ic == 13){   //  Enter
+                currentBox->doAction();
+            }
+
+            else if((ic >= 47 && ic <= 57) || ic == 45){  // 0-9 + -
+                if(currentBox->getType() == "TextLabel"){
+                    currentBox->inputText(cc);
+                }
+                else{
+                    backgroundInput = backgroundInput + cc;
+                }
+            }
+
+            else if(ic >= 97 && ic <= 122){ //  a-z
+                backgroundInput = backgroundInput + cc;
+            }
+
+            else if(ic >= 65 && ic <= 90){ //  A-Z
+                backgroundInput = backgroundInput + (char)(ic + 32);
+            }
+
+            else if(ic == 8){   //  Backspace
+                if(currentBox->getType() == "TextLabel"){
+                    if(currentBox->getInputedText().length()>0)
+                        currentBox->subInputText();
+                }
+                else{
+                    if(backgroundInput.length()>0)
+                        backgroundInput.pop_back();
+                }
+            }
+            break;
+        }
+
+        if(backgroundInput == admin){
+            if(currentGUI->getName() == "START"){
+                currentGUI->setBoxVisible(1, true);
+                backgroundInput = cc;
+            }
+        }
+
+        else{
+            if(!(stop.find(backgroundInput) != string::npos)){
+                if(!(admin.find(backgroundInput) != string::npos))
+                    backgroundInput = cc;
+            }
+        }
+    }
+    while(backgroundInput != "stop");
+
+    return 0;
+}
+

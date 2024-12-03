@@ -1,0 +1,607 @@
+#include <iostream>
+#include <windows.h>
+#include <cstdlib>
+#include <math.h>
+#include <conio.h>
+#include <string>
+
+using namespace std;
+
+//  Sizes
+const unsigned int GUIX = 47;
+const unsigned int GUIY = 20;
+
+//  Corners
+const char cr1 = (char)(218);
+const char cr2 = (char)(191);
+const char cr3 = (char)(192);
+const char cr4 = (char)(217);
+
+char EmptyGUI[GUIY][GUIX] =
+{
+//   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',    // 0
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 1
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 2
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 3
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 4
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 5
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 6
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 7
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 8
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 9
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 10
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 11
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 12
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 13
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 14
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 15
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 16
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 17
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 18
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '     // 19
+};
+
+char StartGUI[GUIY][GUIX] =
+{
+//   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',    // 0
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 1
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 2
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ','#','#','#','#','#',' ','#','#',' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 3
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ','#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 4
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#','#','#',' ',' ',' ','#',' ',' ',' ','#',' ','#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 5
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 6
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 7
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 8
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 9
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 10
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 11
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 12
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 13
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 14
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 15
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 16
+    ' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',    // 17
+    ' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',    // 18
+    ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '     // 19
+};
+
+class Box{
+private:
+    Box *T, *R, *B, *L;
+    bool centered, visible, secret, frame, selected;
+    string type, text, placeholderText="";
+    unsigned int startX, startY, lenX, lenY;
+
+public:
+    char** Out;
+
+    Box(bool typeOfBox,
+        unsigned int sx,
+        unsigned int sy,
+        unsigned int lX,
+        bool centeredText = true,
+        Box* Top = nullptr,
+        Box* Right = nullptr,
+        Box* Bottom = nullptr,
+        Box* Left = nullptr,
+        bool _visible = true,
+        bool _secret = false,
+        bool haveFrame = true)
+    {
+        visible = _visible;
+        secret = _secret;
+        frame = haveFrame;
+        selected = false;
+
+        type = typeOfBox;
+
+        T = Top;
+        R = Right;
+        B = Bottom;
+        L = Left;
+        centered = centeredText;
+
+        startX = sx;
+        startY = sy;
+        lenX = lX;
+        lenY = 3;
+
+        Out = new char*[lenY];
+        for(int i=0; i<3; i++)
+            Out[i] = new char[1];
+        setOutput();
+        setOutputText();
+    }
+
+    Box* Switch(char side){
+        switch(side){
+        case 'T':
+            if(T != nullptr && T->isVisible())
+                return T;
+                break;
+        case 'R':
+            if(R != nullptr && T->isVisible())
+                return R;
+                break;
+        case 'B':
+            if(B != nullptr && T->isVisible())
+                return B;
+                break;
+        case 'L':
+            if(L != nullptr && T->isVisible())
+                return L;
+                break;
+        default:
+            cout<<"ERROR 404 - NO SIDE AS "<<side<<"!"<<endl;
+            return nullptr;
+            break;
+        }
+    }
+
+    void setSelect(bool isSelected){
+        selected = isSelected;
+    }
+
+    void setText(string txt){
+        text = txt;
+    }
+
+    void setOutput(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; i++) {
+                if (Out[i] != nullptr) {
+                    delete[] Out[i];
+                    Out[i] = nullptr;
+                }
+            }
+        }
+        delete[] Out;
+
+        Out = new char*[lenY];
+        for(unsigned int i=0; i<lenY; i++){
+            Out[i] = new char[lenX];
+            for(unsigned int j=0; j<lenX; j++){
+                if(i==0){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr1;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr2;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else if(i==2){
+                    if(frame){
+                        if(j == 0)
+                            Out[i][j] = cr3;
+                        else if(j == lenX-1)
+                            Out[i][j] = cr4;
+                        else{
+                            if(secret){
+                                if((lenX-j)%2==1)
+                                    Out[i][j] = '-';
+                                else
+                                    Out[i][j] = ' ';
+                            }
+                            else
+                                Out[i][j] = '-';
+                        }
+                    }
+                    else{
+                        Out[i][j] = ' ';
+                    }
+                }
+                else{
+                    if(j == 0 || j == lenX-1){
+                        if(secret || !frame)
+                            Out[i][j] = ' ';
+                        else
+                            Out[i][j] = '|';
+                    }
+                    else
+                        Out[i][j] = ' ';
+                }
+            }
+        }
+        setOutputText();
+    }
+
+    void setOutputText(){
+        int i=0;
+        int len = text.length();
+        int margin = round((lenX-4 - len)/2);
+
+        if(len>0){
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = text[i];
+                        i++;
+                    }
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = text[i];
+                        i++;
+                    }
+                }
+            }
+        }
+        else{
+            len = placeholderText.length();
+            if(centered){
+                for(unsigned int j=2+margin; j<lenX-2; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderText[i];
+                        i++;
+                    }
+                }
+            }
+            else{
+                for(int j = 2; j<lenX-3; j++){
+                    if(i<len){
+                        Out[1][j] = placeholderText[i];
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+
+    void printBox(){
+        if(visible){
+            cout << "\033[" << startY << ";" << startX << "H";
+            cout << "\033[7m";
+            if(selected)
+                cout << "\033[44m";
+            for(unsigned int i=0; i<lenY; i++){
+                for(unsigned int j=0; j<lenX; j++){
+                    cout << Out[i][j];
+                }
+                cout << "\033[1B" << "\033[" << lenX << "D";
+            }
+            cout << "\033[0m";
+        }
+    }
+
+    int getStartX(){
+        return startX;
+    }
+
+    int getStartY(){
+        return startY;
+    }
+
+    int getLen(){
+        return lenX;
+    }
+
+    bool isVisible(){
+        return visible;
+    }
+
+    void setVisible(bool _visible){
+        visible = _visible;
+    }
+
+    void setT(Box *box){
+        T = box;
+    }
+
+    void setR(Box *box){
+        R = box;
+    }
+
+    void setB(Box *box){
+        B = box;
+    }
+
+    void setL(Box *box){
+        L = box;
+    }
+
+    void setPlaceholderText(string placeholder){
+        placeholderText = placeholder;
+    }
+
+    string getType(){
+        return type;
+    }
+
+    void inputText(char c){
+        text+=c;
+        setOutputText();
+    }
+
+    void doAction(){
+        if(type == "Button"){
+
+        }
+    }
+
+    ~Box(){
+        if (Out != nullptr) {
+            for (unsigned int i = 0; i < lenY; ++i) {
+                delete[] Out[i];
+            }
+            delete[] Out;
+        }
+    }
+};
+
+class GUI{
+private:
+    string name;
+    Box** boxes;
+    int box_amount, currentBoxes;
+    char GUI_OUT[GUIY][GUIX];
+public:
+    GUI(string GUI_name, unsigned int _box_amount){
+        name = GUI_name;
+        box_amount = _box_amount;
+        currentBoxes = 0;
+        boxes = new Box*[box_amount];
+        for(int i=0; i<box_amount; i++){
+            boxes[i] = nullptr;
+        }
+
+        generateGUI();
+    }
+
+    GUI& operator=(const GUI& gui){
+        name = gui.name;
+        box_amount = gui.box_amount;
+        currentBoxes = 0;
+        boxes = new Box*[box_amount];
+        for(int i=0; i<box_amount; i++){
+            boxes[i] = nullptr;
+        }
+
+        generateGUI();
+    }
+
+    string getName(){
+        return name;
+    }
+
+    void printGUI(){
+        cout << "\033[7m";
+        for(unsigned int i=0; i<GUIY; i++){
+            for(unsigned int j=0; j<GUIX; j++){
+                if(GUI_OUT[i][j] == '#')
+                    cout << "\033[0;30;40m" << GUI_OUT[i][j] << "\033[0;7m";
+                else
+                    cout<<GUI_OUT[i][j];
+            }
+            cout<<endl;
+        }
+        cout << "\033[0m" << endl;
+
+        for(unsigned int i=0; i<box_amount; i++){
+            if(boxes[i]!=nullptr)
+                boxes[i]->printBox();
+        }
+    }
+
+    void UpdateGUI(){
+        //system("cls");
+        printGUI();
+    }
+
+    void generateGUI(){
+        if(name == "START")
+            setStartGUI();
+        else{
+            for(unsigned int i=0; i<GUIY; i++){
+                for(unsigned int j=0; j<GUIX; j++){
+                    GUI_OUT[i][j] = EmptyGUI[i][j];
+                }
+            }
+        }
+    }
+
+    void addBox(Box *box){
+        boxes[currentBoxes] = box;
+        currentBoxes++;
+        //generateBox(box);
+    }
+
+    void setStartGUI(){
+        for(unsigned int i=0; i<GUIY; i++){
+            for(unsigned int j=0; j<GUIX; j++){
+                GUI_OUT[i][j] = StartGUI[i][j];
+            }
+        }
+    }
+
+    void setBoxVisible(unsigned int boxNumber, bool visible){
+        boxes[boxNumber]->setVisible(visible);
+        //generateBox(boxes[boxNumber]);
+    }
+
+    Box *getBox(int number){
+        return boxes[number];
+    }
+
+    void setBoxNeighbor(unsigned int boxNumber, char side, Box *box){
+        switch(side){
+            case 'T':
+                boxes[boxNumber]->setT(box);
+                break;
+            case 'B':
+                boxes[boxNumber]->setB(box);
+                break;
+            case 'R':
+                boxes[boxNumber]->setR(box);
+                break;
+            case 'L':
+                boxes[boxNumber]->setL(box);
+                break;
+        }
+    }
+
+    ~GUI(){}
+};
+
+GUI setupStartGUI(){
+    GUI Start("START", 2);
+    Box *insertButton = new Box("Button", 15, 10, 17);
+    Box *adminButton = new Box("Button", 15, 13, 17, true, nullptr, nullptr, nullptr, nullptr, true, true, true);
+
+    insertButton->setText("INSERT CARD");
+    insertButton->setOutput();
+
+    adminButton->setText("ADMIN");
+    adminButton->setOutput();
+
+    Start.addBox(insertButton);
+    Start.addBox(adminButton);
+
+    Start.setBoxNeighbor(0, 'B', Start.getBox(1));
+    Start.setBoxNeighbor(1, 'T', Start.getBox(0));
+
+    return Start;
+}
+
+GUI setupInsertCardGUI(){
+    GUI Insert("INSERT_CARD", 2);
+    Box *cardInput = new Box("TextBox", 15, 6, 17, true, nullptr, nullptr, nullptr, nullptr, true, false, false);
+    Box *cardTextLabel = new Box("TextLabel", 15, 10, 17, false, nullptr, nullptr, nullptr, nullptr, true, false, true);
+    Box *backToStart = new Box("Button", 15, 13, 17, true, cardInput, nullptr, nullptr, nullptr, true, false, true);
+
+    cardInput->setB(backToStart);
+    cardInput->setText("INSERT CARD");
+    cardInput->setOutput();
+
+    cardTextLabel->setPlaceholderText("CARD_NUMBER");
+    cardTextLabel->setOutput();
+
+    backToStart->setText("BACK");
+    backToStart->setOutput();
+
+    Insert.addBox(cardInput);
+    Insert.addBox(cardTextLabel);
+    Insert.addBox(backToStart);
+
+    return Insert;
+}
+
+int main(){
+    //  Setting every GUI
+    GUI Start = setupStartGUI();
+    cout<<"Start"<<endl;
+    GUI InsertCard = setupInsertCardGUI();
+    cout<<"Input"<<endl;
+
+    GUI *currentGUI = &Start;
+    Box *currentBox = currentGUI->getBox(0);
+    currentBox->setSelect(true);
+
+    string backgroundInput = "", admin = "admin", stop = "stop";
+
+    int c;
+    char cc;
+    do{
+        cout << "\033[H";
+        currentGUI->UpdateGUI();
+        cout << "\033[H\033[21B";
+        cout << "[" << backgroundInput << "]" << endl;
+
+        while(!_kbhit()){}
+        c = getch();
+        cc = c;
+        switch(c)
+        {
+        case 224:  // Arrows
+            cout<<"!!!!!"<<endl;
+            switch (_getch())
+            {
+                Sleep(1000);
+            case 72: // Up
+                cout<<"[ 1 ";
+                currentBox->setSelect(false);
+                cout<<"2 ";
+                currentBox = currentBox->Switch('T');
+                cout<<"3 ";
+                currentBox->setSelect(true);
+                cout<<"4 ]";
+                break;
+            case 80: // Down
+                cout<<"[ 2 ";
+                currentBox->setSelect(false);
+                cout<<"2 ";
+                currentBox = currentBox->Switch('B');
+                cout<<"3 ";
+                currentBox->setSelect(true);
+                cout<<"4 ]";
+                break;
+            case 75: // Left
+                cout<<"[ 3 ";
+                currentBox->setSelect(false);
+                cout<<"2 ";
+                currentBox = currentBox->Switch('L');
+                cout<<"3 ";
+                currentBox->setSelect(true);
+                cout<<"4 ]";
+                break;
+            case 77: // Right
+                cout<<"[ 4 ";
+                currentBox->setSelect(false);
+                cout<<"2 ";
+                currentBox = currentBox->Switch('R');
+                cout<<"3 ";
+                currentBox->setSelect(true);
+                cout<<"4 ]";
+                break;
+            default:
+                cout<<"Skibidi";
+                break;
+            }
+        default:
+            if(c == '\r'){
+                currentBox->doAction();
+            }
+            else if(currentBox->getType() == "TextLabel"){
+                currentBox->inputText(c);
+            }
+            else{
+                backgroundInput = backgroundInput + cc;
+            }
+            break;
+        }
+
+        if(backgroundInput == "admin"){
+            if(currentGUI->getName() == "START"){
+                currentGUI->setBoxVisible(1, false);
+                backgroundInput = cc;
+            }
+        }
+
+        else{
+            if(!(stop.find(backgroundInput) != string::npos)){
+                if(!(admin.find(backgroundInput) != string::npos))
+                    backgroundInput = cc;
+            }
+        }
+    }
+    while(backgroundInput != "stop");
+
+    return 0;
+}
+
